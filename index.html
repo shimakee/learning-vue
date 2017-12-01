@@ -9,16 +9,14 @@
 </head>
 <body>
     <div id="app">
-        <button v-on:click='counter++;'>Alert me!</button><br> <!-- simple javascript will work-->
-        <p>{{counter}}</p>
-        <p>{{ counter  > 10 ? 'counter is greater than 10': 'counter is less than 10'}}</p> <!-- turnary expression will work-->
-        <button v-on:click='alert("some");'>Alert me!</button><br> <!-- initiated wont work-->
+        <input type="text" v-model="text"> <!--will change-->
+        {{text}}    <!--// will change-->
     </div>
     <script>   
         new Vue({
             el: '#app',
             data:{
-                counter: 0
+                text: 'Hello' // will not change
             }
         })
     
