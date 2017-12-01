@@ -9,18 +9,28 @@
 </head>
 <body>
     <div id="app">
-        <input type="submit" v-bind:value="counter" v-on:click="increment(7, $event)"> <!-- passing event for proper handling-->
-        <input type="submit" v-bind:value="counter" v-on:click="increment(10)"> <!-- no longer works without event arguement-->
+        <p v-on:mousemove='mCoor'>{{x}} / {{y}}-----
+            <span v-on:mousemove.stop=''>     -DEAD SPOT</span> <!-- will stop event propagation on this part of the html-->
+        </p>
+        <p v-on:mousemove='mCoorNoArg'>{{x}} / {{y}}-----
+            <span v-on:mousemove.stop=''>     -DEAD SPOT</span> <!-- will stop event propagation on this part of the html-->
+        </p>
     </div>
     <script>   
         new Vue({
             el: '#app',
             data:{
-                counter: 0
+                x: '',
+                y: ''
             },
             methods:{
-                increment: function(inc, event){//can accept an arguement
-                     return  event.target.value = Number(event.target.value) + inc; //converting target value to number since default is string (string would concatinate)
+                mCoor: function(event){
+                    this.x = event.clientX;
+                    this.y = event.clientY;
+                },
+                mCoorNoArg: function(){//whether or not you pass the event arguement - it will still work
+                    this.x = event.clientX;
+                    this.y = event.clientY;
                 }
             }
         })
