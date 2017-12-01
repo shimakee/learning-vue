@@ -9,30 +9,18 @@
 </head>
 <body>
     <div id="app">
-        <p>My name is {{name}}, i am {{age}} years old</p>
-        <p>{{ age*3 }}</p> <!--//first trial to see if it works-->
-        <p>{{ multiplyAge(3) }}</p> <!--//an attempt to make it more elegant-->
-        <p>{{ randomNum() }}</p>
-        <img v-bind:src='imgSrc' alt="peanut butter and jelly" width="200" height="120">
-        <input type="text" v-bind:value="showName()" disabled>
+        <input type="submit" value="click" v-on:click="increment">
+        <p>{{counter}}</p>
     </div>
     <script>   
         new Vue({
             el: '#app',
             data:{
-                name: "Kenneth",
-                age: 29,
-                imgSrc: "https://i.ytimg.com/vi/klDHM_sxYxs/maxresdefault.jpg"
+                counter: 0,
             },
             methods:{
-                multiplyAge: function(factor){
-                    return this.age*factor;
-                },
-                randomNum: function(){
-                    return Math.round(Math.random()*100);
-                },
-                showName: function(){
-                    return this.name;
+                increment: function(actor){
+                    return this.counter++;
                 }
             }
         })
