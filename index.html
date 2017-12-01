@@ -9,29 +9,16 @@
 </head>
 <body>
     <div id="app">
-        <button v-on:click='alertBtn'>Alert me!</button><br>
-        <input type="text" v-on:keydown="keySense">
-        <p>{{ text }}</p>
-        <input type="text" v-on:keydown.enter="keyEnter">
-        <p>{{ text2 }}</p>
+        <button v-on:click='counter++;'>Alert me!</button><br> <!-- simple javascript will work-->
+        <p>{{counter}}</p>
+        <p>{{ counter  > 10 ? 'counter is greater than 10': 'counter is less than 10'}}</p> <!-- turnary expression will work-->
+        <button v-on:click='alert("some");'>Alert me!</button><br> <!-- initiated wont work-->
     </div>
     <script>   
         new Vue({
             el: '#app',
             data:{
-                text: '',
-                text2: ''
-            },
-            methods:{
-                alertBtn: function(event){
-                    alert('Some alert');
-                },
-                keySense: function(){
-                    return this.text = event.target.value;
-                },
-                keyEnter: function(){
-                    return this.text2 = event.target.value;
-                }
+                counter: 0
             }
         })
     
