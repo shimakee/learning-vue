@@ -9,15 +9,19 @@
 </head>
 <body>
     <div id="app">
-        <a v-bind:href="link">Click link</a>
-        <p>{{ title }}</p>
+        <h1>{{title}}</h1>
+        <input type="submit" v-on:click="sayHello">
     </div>
     <script>   
         new Vue({
             el: '#app',
             data:{
                 title: 'Hello World!',
-                link: 'https://google.com'
+            },
+            methods:{
+                sayHello: function(event){
+                    return this.title = "Hello!"; //using this.title instead of just title, since we are inside a method.
+                }
             }
         })
     
