@@ -9,19 +9,15 @@
 </head>
 <body>
     <div id="app">
-        <input type="text">
-        <p>{{ changeTitle() }}</p>
+        <a v-bind:href="link">Click link</a>
+        <p>{{ title }}</p>
     </div>
     <script>   
         new Vue({
             el: '#app',
             data:{
-                title: 'Hello World!'
-            },
-            methods:{
-                changeTitle: function(event){
-                    return 'This needs to be a string';
-                }
+                title: 'Hello World!',
+                link: 'https://google.com'
             }
         })
     
