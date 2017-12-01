@@ -9,13 +9,31 @@
 </head>
 <body>
     <div id="app">
-        <p v-html=completeLink></p> <!--//will anchor tag as expected because of v-html-->
+        <p>My name is {{name}}, i am {{age}} years old</p>
+        <p>{{ age*3 }}</p> <!--//first trial to see if it works-->
+        <p>{{ multiplyAge(3) }}</p> <!--//an attempt to make it more elegant-->
+        <p>{{ randomNum() }}</p>
+        <img v-bind:src='imgSrc' alt="peanut butter and jelly" width="200" height="120">
+        <input type="text" v-bind:value="showName()" disabled>
     </div>
     <script>   
         new Vue({
             el: '#app',
             data:{
-                completeLink: '<a href="https://google.com">Hello World!</a>'
+                name: "Kenneth",
+                age: 29,
+                imgSrc: "https://i.ytimg.com/vi/klDHM_sxYxs/maxresdefault.jpg"
+            },
+            methods:{
+                multiplyAge: function(factor){
+                    return this.age*factor;
+                },
+                randomNum: function(){
+                    return Math.round(Math.random()*100);
+                },
+                showName: function(){
+                    return this.name;
+                }
             }
         })
     
