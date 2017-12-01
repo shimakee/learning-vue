@@ -9,21 +9,28 @@
 </head>
 <body>
     <div id="app">
-        <p>Keystroke: <input type="text" v-on:keyup='trigger'></p> <!--//triggers every keyup stroke-->
-        <br>
-        <p>Enter: <input type="text" v-on:keyup.enter='trigger'></p> <!--//triggers specific key stroke "enter"-->
-        <p>Chain keyboard: <input type="text" v-on:keyup.w.a.s.d='trigger'></p> <!--//triggers chain specific key stroke "w" "a" "s" "d"-->
-        <p>{{text}}</p>
+        <button v-on:click='alertBtn'>Alert me!</button><br>
+        <input type="text" v-on:keydown="keySense">
+        <p>{{ text }}</p>
+        <input type="text" v-on:keydown.enter="keyEnter">
+        <p>{{ text2 }}</p>
     </div>
     <script>   
         new Vue({
             el: '#app',
             data:{
-                text: ''
+                text: '',
+                text2: ''
             },
             methods:{
-                trigger: function(event){
+                alertBtn: function(event){
+                    alert('Some alert');
+                },
+                keySense: function(){
                     return this.text = event.target.value;
+                },
+                keyEnter: function(){
+                    return this.text2 = event.target.value;
                 }
             }
         })
