@@ -9,19 +9,13 @@
 </head>
 <body>
     <div id="app">
-        <h1 v-once>{{title}}</h1> <!--//v-once will make this data not change-->
-        <input type="submit" v-on:click="sayHello">
+        <p>{{completeLink}}</p> <!--//will render the whole link as text instead of an anchor tag-->
     </div>
     <script>   
         new Vue({
             el: '#app',
             data:{
-                title: 'Hello World!',
-            },
-            methods:{
-                sayHello: function(event){
-                    return this.title = "Hello!"; //using this.title instead of just title, since we are inside a method.
-                }
+                completeLink: '<a href="https://google.com">Hello World!</a>'
             }
         })
     
