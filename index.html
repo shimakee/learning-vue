@@ -10,6 +10,9 @@
 <body>
     <div id="app">
         <input type="submit" v-bind:value="counter" v-on:click="increment">
+        <input type="submit" v-bind:value="counter" v-on:click="increment">
+        <input type="submit" v-bind:value="counter" v-on:click="increment">
+        <input type="submit" v-bind:value="counter" v-on:click="increment">
     </div>
     <script>   
         new Vue({
@@ -18,8 +21,8 @@
                 counter: 0,
             },
             methods:{
-                increment: function(){
-                    return this.counter ++;
+                increment: function(event){
+                    return event.target.value ++;
                 }
             }
         })
