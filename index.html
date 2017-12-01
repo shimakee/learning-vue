@@ -9,14 +9,54 @@
 </head>
 <body>
     <div id="app">
-        <input type="text" v-model="text"> <!--will change-->
-        {{text}}    <!--// will change-->
+        <button v-on:click="counter++">+</button>
+        <button v-on:click="counter--">-</button>
+        <button v-on:click="counter2++">counter2</button>
+        <p>    
+            {{counter2}}<br>
+            {{counter}}
+            {{counter >= 5 ? 'greater/equal to 5': 'less than 5'}}    <!--// direct expression - will change-->
+        </p>
+
+        <!--//========================using method-->
+        <p>    
+            {{counter}}
+            {{ result() }}    <!--// method - will change and runs everytime which means higher resource cost-->
+        </p>
+        <!--//========================using computed-->
+        <p>    
+            {{counter}}
+            {{ output }}    <!--// computed - will change but not used as a function like in methods, only runs when dependent resource changes, see console log-->
+        </p>
     </div>
     <script>   
         new Vue({
             el: '#app',
             data:{
-                text: 'Hello' // will not change
+                counter: 0, // will not change
+                counter2: 0, 
+            },
+            computed:{//will run when depending properties need to be executed
+                output: function(){
+                    console.log('computed');
+                    return this.counter >= 5 ? 'greater/equal to 5': 'less than 5';
+                }
+            },
+            watch:{//will run when the property changes - does not necessarily mean data touched by the watch function
+                counter: function(){//this will only start running once "counter" changes
+                    let vm = this; //because settimeout creates a closure, we need this variable as a way to access "this" - the vue instance;
+                    setTimeout(function(){
+                        console.log('watch'); //this will console log 2 seconds after counter changes, but will not run if other properties changes like 'counter2'
+                        vm.counter2 = 100;//will run when counter property changes, but we are not necessarily touching the 'counter' property in this function
+                    }, 3000);
+                }
+
+            },
+            methods:{
+                result: function(){
+                    console.log('methods');
+                    return this.counter >= 5 ? 'greater/equal to 5': 'less than 5';
+                }
             }
         })
     
