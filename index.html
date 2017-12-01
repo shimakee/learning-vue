@@ -9,28 +9,20 @@
 </head>
 <body>
     <div id="app">
-        <p v-on:mousemove='mCoor'>{{x}} / {{y}}-----
-            <span v-on:mousemove.stop=''>     -DEAD SPOT</span> <!-- will stop event propagation on this part of the html-->
-        </p>
-        <p v-on:mousemove='mCoorNoArg'>{{x}} / {{y}}-----
-            <span v-on:mousemove.stop=''>     -DEAD SPOT</span> <!-- will stop event propagation on this part of the html-->
-        </p>
+        <p>Keystroke: <input type="text" v-on:keyup='trigger'></p> <!--//triggers every keyup stroke-->
+        <br>
+        <p>Enter: <input type="text" v-on:keyup.enter='trigger'></p> <!--//triggers specific key stroke "enter"-->
+        <p>{{text}}</p>
     </div>
     <script>   
         new Vue({
             el: '#app',
             data:{
-                x: '',
-                y: ''
+                text: ''
             },
             methods:{
-                mCoor: function(event){
-                    this.x = event.clientX;
-                    this.y = event.clientY;
-                },
-                mCoorNoArg: function(){//whether or not you pass the event arguement - it will still work
-                    this.x = event.clientX;
-                    this.y = event.clientY;
+                trigger: function(event){
+                    return this.text = event.target.value;
                 }
             }
         })
