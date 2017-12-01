@@ -9,12 +9,8 @@
 </head>
 <body>
     <div id="app">
-        <input type="submit" v-on:click="increment(1)"> <!--//doesnt matter if no value is placed-->
-        <input type="submit" value=' ' v-on:click="increment(1)"> <!--//doesnt matter if empty or blank spaced-->
-        <input type="submit" value='5' v-on:click="increment(2)"> <!--//matters if value is present-->
-        <input type="submit" value='something' v-on:click="increment(5)"> <!--//matters if value does not match for its purpose-->
-        <input type="submit" v-bind:value="counter" v-on:click="increment(7)">
-        <input type="submit" v-bind:value="counter" v-on:click="increment(10)">
+        <input type="submit" v-bind:value="counter" v-on:click="increment(7, $event)"> <!-- passing event for proper handling-->
+        <input type="submit" v-bind:value="counter" v-on:click="increment(10)"> <!-- no longer works without event arguement-->
     </div>
     <script>   
         new Vue({
@@ -23,7 +19,7 @@
                 counter: 0
             },
             methods:{
-                increment: function(inc){//can accept an arguement
+                increment: function(inc, event){//can accept an arguement
                      return  event.target.value = Number(event.target.value) + inc; //converting target value to number since default is string (string would concatinate)
                 }
             }
