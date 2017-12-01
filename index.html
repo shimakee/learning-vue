@@ -9,7 +9,7 @@
 </head>
 <body>
     <div id="app">
-        <p>{{completeLink}}</p> <!--//will render the whole link as text instead of an anchor tag-->
+        <p v-html=completeLink></p> <!--//will anchor tag as expected because of v-html-->
     </div>
     <script>   
         new Vue({
