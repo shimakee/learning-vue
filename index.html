@@ -7,47 +7,208 @@
     <title>Learning Vue</title>
     <script src="vue.js"></script>
     <style>
-    
+    .container{
+        width: 100%;
+        margin: 0%;
+        padding: 0%;
+        /* background: rgb(209, 115, 115); */
+        text-align: center;
+        list-style: none;
+    }
+    .overflow{
+        height: 400px;
+        overflow: scroll;
+    }
+    .label{
+        position:relative;
+        top: -30px;
+    }
+    .health{
+        background: white;
+        border: 3px solid black;
+        height: 40px;
+        width: 40%;
+        margin: 0% 4%;
+        float: left;
+        text-align: center;
+    }
+    .currentHealth{
+        background: rgb(116, 216, 116);
+        height: 100%;
+        /* width: 100%; */
+        margin: 0;
+        padding: 0;
+        position: relative;
+    }
+    .detail{
+        /* height: 50px; */
+        width: 80%;
+        margin: 5px 10%;
+        padding: 5px;
+    }
+    .player{
+        background: lightblue;
+        /* height: 20px; */
+    }
+    .monster{
+        background: lightcoral;
+        /* height: 20px; */
+    }
+    .button{
+        /* height: 50px; */
+        width: 100px;
+        margin: 10px;
+    }
+    .attack{
+        background: red;
+    }
+    .special{
+        background: orange;
+    }
+    .heal{
+        background: green;
+    }
+    .default{
+        background: lightgray;
+    }
     </style>
 </head>
 <body>
     <div id="app">
-        <div>
-            <button @click="show = !show" >Toggle</button>
-            <p v-if="show">Show</p>
-            <p v-else>The money!</p>
-            <p v-show="show">me..</p>
+        <div class="container">
+            <p>Game</p>
+            <div class="health"><div class="currentHealth" :style="playerHealthWidth"></div><span class="label">{{player.name}}</span></div>
+            <div class="health"><div class="currentHealth" :style="monsterHealthWidth"></div><span class="label">MONSTER</span></div>
         </div>
 
-        <ul v-for="(movie, index) in movies" style="list-style: none">
-            <li>{{index+ 1}}: {{movie}}</li>
-        </ul>
-        
-        <hr>
-
-        <ul v-for="(value, key, index) in profiles" style="list-style: none">
-                <li>{{index}} - {{key}}: {{value}}</li>
-        </ul>
-
-        <ul v-for="(value, key, index) in testObj" style="list-style: none">
-            <li>
-                <p v-if="key != 'data'">{{value}}</p>
-                <ul v-if="key == 'data'" v-for="item in value">
-                    <li>{{item}}</li>
-                    </ul>
-            </li>
-        </ul>
+        <div class="container">
+            <button class="button default" @click="startGame">Start Game</button>
+        </div>
+        <div class="container" v-if="game">
+            <div class="container" >
+                <button class="button attack" @click="attack">Attack</button>
+                <button class="button special" @click="special">Special</button>
+                <button class="button heal" @click="heal">Heal</button>
+                <button class="button surrender" @click="surrender">Surrender</button>
+            </div>
+            <ul class="overflow" style="list-style: none;">
+                <template class="container" v-for="(detail, i) in fightDetails">
+                    <li class="detail monster" v-if="i%2">{{detail}}</li>
+                    <li class="detail player" v-else=>{{detail}}</li>
+                </template>
+            </ul>
+        </div>
     </div>
     <script>   
         new Vue({
             el: '#app',
             data:{
-                show: true,
-                movies: ["Pacific rim", "Miracle in cell #7", "The Matrix", "Dawn of Justice"],
-                profiles: {name: "Itachi Uchiha", anime:"Naruto", skill:"Sharingan", special: "Mangekyo"},
-                testObj: {name: "Movie List", data: ["Pacific rim", "Miracle in cell #7", "The Matrix", "Dawn of Justice"]}
+                game: false,
+                player:{
+                    name: 'PLAYER 1',
+                    currentHealth: 100,
+                    maxHealth: 100,
+                    attack: 15,
+                    heal: 45
+                },
+                monster:{
+                    name: 'MONSTER 1',
+                    currentHealth: 150,
+                    maxHealth: 150,
+                    attack: 20,
+                    heal: 15
+                },
+                fightDetails: []
+            },
+            computed:{
                 
+                playerHealthWidth: function(){
+                    return {
+                        width: Math.round(this.player.currentHealth/this.player.maxHealth * (100))+"%"
+                    }
+                },
+                monsterHealthWidth: function(){
+                    
+                    return {
+                        width: Math.round(this.monster.currentHealth/this.monster.maxHealth *(100))+"%"
+                    }
+                }
+            },
+            watch:{
+                'player.currentHealth': function(){
+                    let vm = this;
+                    if(this.player.currentHealth <= 0){
+                        this.game = false;
+                        this.monster.currentHealth = this.monster.maxHealth
+                        this.player.currentHealth = this.player.maxHealth;
+                        this.fightDetails = [];
+                        alert('You have been slayn like a worthless pig!');
+                    }
+                },
+                'monster.currentHealth': function(){
+                    let vm = this;
+                    if(this.monster.currentHealth <= 0){
+                        this.game = false;
+                        this.monster.currentHealth = this.monster.maxHealth;
+                        this.player.currentHealth = this.player.maxHealth;
+                        this.fightDetails = [];
+                        alert('You have vanquished the beast!');
+                    }
+                }
+
+            },
+            methods:{
+                startGame:function(){
+                    if(this.game != true){
+                        this.player.name = prompt('Who dares disturb my slumber??!!', 'PLAYER');
+                        this.game = true;
+                    }else{
+                        this.game = false;
+                    }
+                },
+                surrender:function(){
+                    this.game = !confirm("You're worthless coward!! RUN!!!");
+                },
+                attack:function(){
+                    let monster = this.monster,
+                        player = this.player,
+                        multiplierP = Math.random(),
+                        multiplierM = Math.random(),
+                        playerAttack = Math.round(player.attack *  multiplierP),
+                        monsterAttack = Math.round(monster.attack * multiplierM);
+                        
+                    monster.currentHealth = (monster.currentHealth -  playerAttack <= 0) ? 0: monster.currentHealth - playerAttack;
+                    this.fightDetails.push("Player Attacks for "+playerAttack+" damage!");
+                    player.currentHealth = (player.currentHealth -  monsterAttack <= 0) ? 0: player.currentHealth - monsterAttack;
+                    this.fightDetails.push("Monster Claws for "+monsterAttack+" damage!");
+                },
+                special:function(){
+                    let monster = this.monster,
+                        player = this.player,
+                        multiplierP = 1+ Math.random(),
+                        multiplierM = 1+ Math.random(),
+                        playerAttack = Math.round((player.attack * multiplierP)),
+                        monsterAttack = Math.round((monster.attack * multiplierM));
+
+                    monster.currentHealth = (monster.currentHealth - playerAttack <= 0) ? 0: monster.currentHealth - playerAttack;
+                    this.fightDetails.push("Player Bashes for "+playerAttack+" damage!");
+                    player.currentHealth = (player.currentHealth -  monsterAttack <= 0) ? 0: player.currentHealth - monsterAttack;
+                    this.fightDetails.push("Monster Ravages for "+monsterAttack+" damage!");
+                },
+                heal:function(){
+                    let multiplierP = 2 + Math.random(),
+                        multiplierM = 1 + Math.random() + .3,
+                        player = this.player,
+                        monster = this.monster,
+                        healAmount = Math.round(player.heal * multiplierP),
+                        monsterAttack = Math.round((monster.attack * multiplierM));
+                    player.currentHealth = (player.currentHealth+healAmount >= player.maxHealth) ? player.maxHealth: player.currentHealth+healAmount;
+                    this.fightDetails.push("Player Heals for "+healAmount+" health!");
+                    player.currentHealth = (player.currentHealth -  monsterAttack <= 0) ? 0: player.currentHealth - monsterAttack;
+                    this.fightDetails.push("Monster Rampages for "+monsterAttack+" damage!");
+                },
             }
+
         })
     
 </script>
