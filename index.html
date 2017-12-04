@@ -6,68 +6,106 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Learning Vue</title>
     <script src="vue.js"></script>
+    <style>
+        .box{
+            background: gray;
+            height: 150px;
+            width: 150px;
+        }
+        .highlight{
+            background: yellow;
+        }
+        .green{
+            background: green;
+        }
+        .shrink{
+            height: 50px;
+            width:50px;
+        }
+        .bar{
+            background: black;
+            height: 50px;
+        }
+    
+    </style>
 </head>
 <body>
     <div id="app">
+        <button @click='startEffect'>Start effect</button> <!--//make below dynamic-->
+        <div class="box" :class="box">      <!--direct-->
+            {{ box }}
+        </div>
 
-        <button @click="value+=5">+5</button>
-        <button @click="value+=1">+1</button>
-        <button @click="value-=1">-1</button>
-        <button @click="value-=5">-5</button>
-        <p>    
-            Value: {{ value }}
-            <!-- Goal: {{ goal }} -->
-        </p>
-        <p>
-            Result: {{ result }}
-        </p>
+        <div class="box" :class="[box, shrink, green]"> <!--//array-->
+        </div>
+
+        <input type="text" v-model="inputText">
+        <div class="box" :class="inputText">    <!--binded-->
+            {{ inputText }}
+        </div>
+
+        <input type="text" v-model="inputText2">
+        <input type="text" v-model="inputText3">
+        <div class="box" :class="inputText2">
+            {{ inputText2 }}
+        </div>
+        <div class="box" :class="{green: inputText3}"> <!--//object-->
+            {{ inputText3 }}
+        </div>
+        
+        <input type="text" v-model="inputText4">    <!--direct-->
+        <div class="box" :style="inputText4">
+                {{ inputText4 }}
+        </div>
+
+        <button @click='progressComp'>StartProg</button> <!--//progressBar-->
+        <div class="bar" :style="progressBar"></div>
+        
     </div>
     <script>   
         new Vue({
             el: '#app',
             data:{
-                value: 0,
-                goal: Math.round(Math.random()*100)         
+                con: false,
+                box: 'box',
+                highlight: 'highlight',
+                shrink: 'shrink',
+                green: 'green',
+                inputText: 'highlight',         
+                inputText2: 'green',         
+                inputText3: true,         
+                inputText4: 'background: blue',
+                progress: 0   
             },
             computed:{
-                result: function(){
-                    let goal = this.goal;
-                    switch(true){
-                        case this.value == goal:
-                            return 'Correct!';
-                            break;
-                        case this.value > goal+5:
-                            return 'too high!';
-                            break;
-                        case this.value > goal:
-                            return 'a bit high';
-                            break;
-                        case this.value < goal-5:
-                            return 'too low!';
-                            break;
-                        case this.value < goal:
-                            return 'a bit low!';
-                            break;
-
-                        default:
-                            return 'Incorrect.';
-                            break;
-                    }
+                progressBar: function(){
+                    return {width: this.progress+'%'}
                 }
+                
             },
             watch:{
-                result: function(){
-                    let vm = this; 
-                    if(this.result == 'Correct!'){
-                    setTimeout(function(){
-                        vm.value = 0;
-                    }, 2000);
-                    }
-                }
+                
+            },
+            methods:{
+                startEffect:function(){
+                    let vm = this;
+                    let interval = setInterval(function(){
+                        vm.box = (vm.box != 'shrink') ? 'shrink':'highlight';
+                    }, 500);
+                },
+                progressComp: function(){
+                    let vm= this;
 
+                    setInterval(function(){
+                        if(vm.progress < 100){
+                            vm.progress += 10;
+                            console.log(vm.progress);
+                        }
+                    }, 1000);
+                }
             }
         })
     
-    </script>
+</script>
 </body>
 </html>
