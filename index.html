@@ -7,102 +7,46 @@
     <title>Learning Vue</title>
     <script src="vue.js"></script>
     <style>
-        .box{
-            background: gray;
-            height: 150px;
-            width: 150px;
-        }
-        .highlight{
-            background: yellow;
-        }
-        .green{
-            background: green;
-        }
-        .shrink{
-            height: 50px;
-            width:50px;
-        }
-        .bar{
-            background: black;
-            height: 50px;
-        }
     
     </style>
 </head>
 <body>
     <div id="app">
-        <button @click='startEffect'>Start effect</button> <!--//make below dynamic-->
-        <div class="box" :class="box">      <!--direct-->
-            {{ box }}
+        <div>
+            <button @click="show = !show" >Toggle</button>
+            <p v-if="show">Show</p>
+            <p v-else>The money!</p>
+            <p v-show="show">me..</p>
         </div>
 
-        <div class="box" :class="[box, shrink, green]"> <!--//array-->
-        </div>
-
-        <input type="text" v-model="inputText">
-        <div class="box" :class="inputText">    <!--binded-->
-            {{ inputText }}
-        </div>
-
-        <input type="text" v-model="inputText2">
-        <input type="text" v-model="inputText3">
-        <div class="box" :class="inputText2">
-            {{ inputText2 }}
-        </div>
-        <div class="box" :class="{green: inputText3}"> <!--//object-->
-            {{ inputText3 }}
-        </div>
+        <ul v-for="(movie, index) in movies" style="list-style: none">
+            <li>{{index+ 1}}: {{movie}}</li>
+        </ul>
         
-        <input type="text" v-model="inputText4">    <!--direct-->
-        <div class="box" :style="inputText4">
-                {{ inputText4 }}
-        </div>
+        <hr>
 
-        <button @click='progressComp'>StartProg</button> <!--//progressBar-->
-        <div class="bar" :style="progressBar"></div>
-        
+        <ul v-for="(value, key, index) in profiles" style="list-style: none">
+                <li>{{index}} - {{key}}: {{value}}</li>
+        </ul>
+
+        <ul v-for="(value, key, index) in testObj" style="list-style: none">
+            <li>
+                <p v-if="key != 'data'">{{value}}</p>
+                <ul v-if="key == 'data'" v-for="item in value">
+                    <li>{{item}}</li>
+                    </ul>
+            </li>
+        </ul>
     </div>
     <script>   
         new Vue({
             el: '#app',
             data:{
-                con: false,
-                box: 'box',
-                highlight: 'highlight',
-                shrink: 'shrink',
-                green: 'green',
-                inputText: 'highlight',         
-                inputText2: 'green',         
-                inputText3: true,         
-                inputText4: 'background: blue',
-                progress: 0   
-            },
-            computed:{
-                progressBar: function(){
-                    return {width: this.progress+'%'}
-                }
+                show: true,
+                movies: ["Pacific rim", "Miracle in cell #7", "The Matrix", "Dawn of Justice"],
+                profiles: {name: "Itachi Uchiha", anime:"Naruto", skill:"Sharingan", special: "Mangekyo"},
+                testObj: {name: "Movie List", data: ["Pacific rim", "Miracle in cell #7", "The Matrix", "Dawn of Justice"]}
                 
-            },
-            watch:{
-                
-            },
-            methods:{
-                startEffect:function(){
-                    let vm = this;
-                    let interval = setInterval(function(){
-                        vm.box = (vm.box != 'shrink') ? 'shrink':'highlight';
-                    }, 500);
-                },
-                progressComp: function(){
-                    let vm= this;
-
-                    setInterval(function(){
-                        if(vm.progress < 100){
-                            vm.progress += 10;
-                            console.log(vm.progress);
-                        }
-                    }, 1000);
-                }
             }
         })
     
