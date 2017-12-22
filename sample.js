@@ -1,16 +1,16 @@
-//register component first before creating root instance
+var data = {din: 'What?'};//putting data outside vue instance makes it the SAME DATA for all components
+
 Vue.component('ken', {
-    template: '<h1>Hello World!</h1>'
-});
-
-//variable created outside instance to use inside component
-var child = {template: '<h1>Again!</h1>'}
-
-//root instance created
-new Vue({
-    el: '#app',
-    components:{
-        'kenn': child,
-        'kenneth': {template: '<h1>What?</h1>'} //component created directly inside instance
+    data: function(){//must be a function if inside a component not a vue instance
+        return data//return object with data
+    },
+    template: '<h1>Hello {{ din }}! <button @click="changeSomething">Change</button></h1>',
+    methods:{
+        changeSomething: function(){
+            this.din = 'Changed';
+        }
     }
+});
+new Vue({
+    el: '#app'
 });
