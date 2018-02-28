@@ -4,6 +4,8 @@
       <kd-header></kd-header>
       <kd-body :name="nameValue" :label="labelValue" :custom="customValue"></kd-body>
       <kd-footer></kd-footer>
+      
+        
   </div>
 </template>
 
