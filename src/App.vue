@@ -1,8 +1,11 @@
 <template>
-  <div>
+  <div class="somekind">
       <img src="./assets/logo.png" alt="vuejs logo" srcset="">
+      <h2>Parent Values</h2>
+      <p>label = {{labelValue}}</p>
+      <button @click="changeName">change</button>
       <kd-header></kd-header>
-      <kd-body :name="nameValue" :label="labelValue" :custom="customValue"></kd-body>
+      <kd-body :label="labelValue" @eventName="labelValue = $event"></kd-body> <!--listen to event -->
       <kd-footer></kd-footer>
       
         
@@ -17,9 +20,11 @@ import Body from './components/Body.vue';
 export default {
   data:()=>{
     return{
-      nameValue:"THIS IS NAME",
-      labelValue:"THIS IS label",
-      customValue:"THIS IS custom"
+      labelValue:"default"
+    }
+  },methods:{
+    changeName: function(){
+      this.labelValue = "changed" //change value directly
     }
   },
   components:{
@@ -32,5 +37,7 @@ export default {
 </script>
 
 <style>
-
+.somekind{
+  background-color:burlywood
+}
 </style>
