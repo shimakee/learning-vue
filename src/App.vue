@@ -5,7 +5,11 @@
       <p>first child = {{someValue1}}</p>
       <!-- <p>second child = {{someValue2}}</p> -->
       <button @click="resetValue">Reset</button>
-      <kd-body :childNumber="1" :sampleValue="someValue1" @eventName="someValue1 = $event"></kd-body> <!-- place the event listener where the even is being emitted -->
+      <kd-body
+        :childNumber="1"
+        :sampleValue="someValue1"
+        :sampleFunction="changeValueFn"> <!-- passing function as prop that can be executed by child -->
+        </kd-body> 
       <kd-footer :childNumber="2" :sampleValue="someValue1"></kd-footer>
       
         
@@ -22,18 +26,15 @@ export default {
     return{
       defaultValue:"default",
       someValue1:"sample value",
-      // someValue2:"second sample",
       child1:1,
       child2:2
     }
   },methods:{
-    changeName: function(){
-      this.labelValue = "changed" //change value directly
-      this.someValue = "changed"
+    changeValueFn: function(){ //the sample function to be passed as prop
+      this.someValue1 = "changed"
     },
     resetValue: function(){
       this.someValue1 = this.defaultValue;
-      this.someValue2 = this.defaultValue;
     }
   },
   components:{

@@ -5,20 +5,18 @@
             <p>sample value = {{ sampleValue}}</p>
         </div>
         <hr>
-        <button @click="changeValue">Change Value</button>
+        <button @click="sampleFunction()">Change Value</button> <!--running a function given as prop by parent-->
     </div>
 </template>
 
 <script>
 export default {
-  props:['sampleValue', 'childNumber']
-,
-  methods:{
-    changeValue:function(){
-        this.sampleValue = "changed by first child";
-        this.$emit('eventName', this.sampleValue);
-    }
+  props:{
+      sampleValue: String,
+      childNumber: Number,
+      sampleFunction: Function //recieving a function as prop from parent
   }
+,
 }
 </script>
 
