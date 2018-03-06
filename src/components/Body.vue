@@ -8,7 +8,7 @@
             </ul>
         </div>
         <div class="col-xs-12 col-sm-6">
-            <h2>Child Values</h2>
+            <h2>Child {{childNumber}} Values</h2>
             <p>label = {{label}}</p>
         </div>
         <hr>
@@ -18,7 +18,7 @@
 
 <script>
 export default {
-  props:['label']
+  props:['label', 'childNumber']
 ,
   methods:{
     reset:function(){
