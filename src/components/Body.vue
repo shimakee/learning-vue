@@ -16,7 +16,7 @@ export default {
   methods:{
     changeValue:function(){
         this.sampleValue = "changed by first child";
-        // this.$emit('eventName', this.sampleValue);
+        this.$emit('eventName', this.sampleValue);
     }
   }
 }

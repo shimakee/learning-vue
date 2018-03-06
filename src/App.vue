@@ -5,8 +5,8 @@
       <p>first child = {{someValue1}}</p>
       <!-- <p>second child = {{someValue2}}</p> -->
       <button @click="resetValue">Reset</button>
-      <kd-body :childNumber="1" :sampleValue="someValue1" ></kd-body>
-      <kd-footer :childNumber="2" :sampleValue="someValue1" ></kd-footer>
+      <kd-body :childNumber="1" :sampleValue="someValue1" @eventName="someValue1 = $event"></kd-body> <!-- place the event listener where the even is being emitted -->
+      <kd-footer :childNumber="2" :sampleValue="someValue1"></kd-footer>
       
         
   </div>
