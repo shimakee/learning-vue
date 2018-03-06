@@ -2,15 +2,16 @@
   <div class="somekind">
       <img src="./assets/logo.png" alt="vuejs logo" srcset="">
       <h2>Parent Values</h2>
-      <p>first child = {{someValue1}}</p>
-      <!-- <p>second child = {{someValue2}}</p> -->
+      <p>sample value = {{someValue1}}</p> <!--value of parent doesnt change because the vent was carried by event bus directly to the other child-->
       <button @click="resetValue">Reset</button>
       <kd-body
         :childNumber="1"
-        :sampleValue="someValue1"
-        :sampleFunction="changeValueFn"> <!-- passing function as prop that can be executed by child -->
+        :sampleValue="someValue1">
         </kd-body> 
-      <kd-footer :childNumber="2" :sampleValue="someValue1"></kd-footer>
+      <kd-footer 
+        :childNumber="2" 
+        :sampleValue="someValue1">
+        </kd-footer>
       
         
   </div>
@@ -30,9 +31,6 @@ export default {
       child2:2
     }
   },methods:{
-    changeValueFn: function(){ //the sample function to be passed as prop
-      this.someValue1 = "changed"
-    },
     resetValue: function(){
       this.someValue1 = this.defaultValue;
     }

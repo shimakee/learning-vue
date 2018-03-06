@@ -5,18 +5,24 @@
             <p>sample value = {{ sampleValue}}</p>
         </div>
         <hr>
-        <button @click="sampleFunction()">Change Value</button> <!--running a function given as prop by parent-->
+        <button @click="changeValue()">Change Value</button> <!--running a function that contains the event bus-->
     </div>
 </template>
 
 <script>
+import {eventBus} from "../main";
+
 export default {
   props:{
       sampleValue: String,
-      childNumber: Number,
-      sampleFunction: Function //recieving a function as prop from parent
+      childNumber: Number
+  },
+  methods:{
+      changeValue: function(){
+          this.sampleValue = "WOW";
+          eventBus.$emit('customEvent', this.sampleValue); //attach custom event on eventbus with custom event and data
+      }
   }
-,
 }
 </script>
 

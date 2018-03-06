@@ -12,10 +12,17 @@
 </template>
 
 <script>
+import {eventBus} from "../main"; //import name vue instance - being used as event bus
+
 export default {
     props:{
         childNumber: Number,
         sampleValue: String
+    },
+    created(){ //listens to the eventbus created as a new vue instance
+        eventBus.$on('customEvent', (data)=>{
+            this.sampleValue = data;
+        });
     }
   
 }
