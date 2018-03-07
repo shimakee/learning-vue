@@ -19,8 +19,8 @@ export default {
   },
   methods:{
       changeValue: function(){
-          this.sampleValue = "WOW";
-          eventBus.$emit('customEvent', this.sampleValue); //attach custom event on eventbus with custom event and data
+        this.sampleValue = "WOW";
+        eventBus.changeByBus(this.sampleValue); //use function from eventbus
       }
   }
 }

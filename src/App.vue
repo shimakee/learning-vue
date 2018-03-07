@@ -3,7 +3,6 @@
       <img src="./assets/logo.png" alt="vuejs logo" srcset="">
       <h2>Parent Values</h2>
       <p>sample value = {{someValue1}}</p> <!--value of parent doesnt change because the vent was carried by event bus directly to the other child-->
-      <button @click="resetValue">Reset</button>
       <kd-body
         :childNumber="1"
         :sampleValue="someValue1">
@@ -25,14 +24,9 @@ import Body from './components/Body.vue';
 export default {
   data:()=>{
     return{
-      defaultValue:"default",
       someValue1:"sample value",
       child1:1,
       child2:2
-    }
-  },methods:{
-    resetValue: function(){
-      this.someValue1 = this.defaultValue;
     }
   },
   components:{
