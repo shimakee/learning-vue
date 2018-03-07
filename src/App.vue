@@ -1,45 +1,31 @@
 <template>
-  <div class="somekind">
-      <img src="./assets/logo.png" alt="vuejs logo" srcset="">
-      <h2>Parent Values</h2>
-      <p>sample value = {{someValue1}}</p> <!--value of parent doesnt change because the vent was carried by event bus directly to the other child-->
-      <kd-body
-        :childNumber="1"
-        :sampleValue="someValue1">
-        </kd-body> 
-      <kd-footer 
-        :childNumber="2" 
-        :sampleValue="someValue1">
-        </kd-footer>
-      
-        
-  </div>
+    <div class="container">
+        <app-header></app-header>
+        <hr>
+        <div class="row">
+            <servers></servers>
+        </div>
+        <hr>
+        <app-footer></app-footer>
+    </div>
 </template>
 
 <script>
-// import Header from './components/Header.vue'; // importing components to be used on the main app
-import Footer from './components/Footer.vue';
-import Body from './components/Body.vue';
+    import Header from './components/Shared/Header.vue';
+    import Footer from './components/Shared/Footer.vue';
+    import Servers from './components/Server/Servers.vue';
+    import ServerDetails from './components/Server/ServerDetails.vue';
 
-export default {
-  data:()=>{
-    return{
-      someValue1:"sample value",
-      child1:1,
-      child2:2
+    export default {
+        components: {
+            appHeader: Header,
+            Servers,
+            'app-server-details': ServerDetails,
+            'app-footer': Footer
+        }
     }
-  },
-  components:{
-    // 'kd-header': Header,
-    'kd-body':Body,
-    'kd-footer': Footer
-  }
-  
-}
 </script>
 
 <style>
-.somekind{
-  background-color:burlywood
-}
+
 </style>
