@@ -1,9 +1,11 @@
 <template>
-    <li class="col-xs-12 col-sm-6">
-        <h2>Server name: {{serverName}}</h2>
-        <!-- <p>Server status: {{serverStatus}}</p> -->
-        <button @click="showDetails()">Show</button>
-        <hr>
+    <li class="col-xs-12 col-sm-6" @click="serverSelected()">
+        <div v-if="serverObject">
+            <h2>Server name: {{serverObject.name}}</h2>
+        </div>
+        <div v-else>
+            no details
+        </div>
     </li>
 
 </template>
@@ -12,14 +14,11 @@
     import {eventBus} from "../../main";
 export default{
     props:{
-        serverName: String,
-        serverStatus: String,
-        serverIndex: Number
+        serverObject: Object
     },
     methods:{
-        showDetails: function(){
-            eventBus.showServer(this.serverIndex);
-            console.log("show");
+        serverSelected:function(){
+            eventBus.$emit('serverSelected', this.serverObject);
         }
     }
 }
