@@ -1,7 +1,7 @@
 <template>
   <div>
-        <h1>Child</h1>
-        <slot></slot>
+      <h1>Son</h1>
+      <slot></slot>
   </div>
 </template>
 
