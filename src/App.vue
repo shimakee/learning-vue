@@ -1,38 +1,44 @@
 <template>
-    <div class="container">
-        <button @click="page='child'">Child</button>
-        <button @click="page='son'">Son</button>
-        <button @click="page='boy'">Boy</button>
-        <keep-alive>
-            <component :is="page" :counter="count">
-                <p>{{content}}</p>
-            </component>
-        </keep-alive>
-
+    <div class="parent">
+        <progress-bar :total="total" :count="quotes.length">
+            <h1>Quotes Added</h1>
+        </progress-bar>
+        <input-box></input-box>
+        <display-box :total="total" :quotes="quotes">
+        </display-box>
     </div>
 </template>
 
 <script>
-    import Child from './components/Child.vue'; //importing the components
-    import Son from './components/Son.vue';
-    import Boy from './components/Boy.vue';
-
+import progressBar from "./components/progressBaR";
+import inputBox from "./components/inputBox";
+import displayBox from "./components/displayBox";
+import {eventBus} from "./main";
     export default {
-        data: function(){
-            return {
-                page: 'child', //data to determine page - MUST BE SAME NAME AS COMPONENT (case sensitive)
-                content: 'Sample data content from parent',
-                count: 0 //passed as prop to child
+        data:()=>{
+            return{
+                quotes:["default quote to start with"],
+                total: 10
             }
         },
-        components: {
-            'child': Child, //components to be shown
-            'son': Son,
-            'boy': Boy
+        components:{
+            "progress-bar": progressBar,
+            "input-box": inputBox,
+            "display-box": displayBox
+        },
+        created(){
+            eventBus.$on("addedQuote", (inputValue)=>{
+                
+                if( this.quotes.length < this.total){
+                    this.quotes.push(inputValue);
+                    eventBus.$emit("quoteCount", {count: this.quotes.length});
+                }else{
+                    alert("delete some quote first!");
+                }
+            });
         }
     }
 </script>
 
 <style>
-
 </style>
