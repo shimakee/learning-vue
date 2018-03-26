@@ -1,7 +1,6 @@
 <template>
     <div class="container">
-        <p>{{ sampleText | filterNameUsed }}</p> <!--using the one registered locally-->
-        <p>{{ nextText | filterName }}</p> <!--using the one registered Globally-->
+        <p>{{ sampleText | filterNameUsed | filterName}}</p> <!--chaining filters-->
     </div>
 </template>
 
