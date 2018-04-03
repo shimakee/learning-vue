@@ -1,15 +1,9 @@
 import Vue from 'vue'
 import App from './App.vue'
 
-Vue.filter('filterName', function(value){ //registering filter globally
-  return value.toLowerCase();
-});
-
-Vue.mixin({ //global mixin created to every vue instance
-  created(){
-    console.log('global mixin');
-  }
-})
+// Vue.filter('countLetters', (value)=>{ //adding filter globally
+//   return value +" ("+value.length+")";
+// });
 
 new Vue({
   el: '#app',
