@@ -31,17 +31,34 @@ import {sample } from "./sampleMixin"; //use the name exported from the js file
 <style>
 
 .slide-enter{
-    opacity: 0;
-    transform: translateY(-15px);
 }
 .slide-enter-active{
-    transition: .5s;
+    animation: goin 1s ease-in forwards;
 }
 .slide-leave{
 }
 .slide-leave-active{
-    transition: .5s;
-    opacity: 0;
-    transform: translateY(-15px);
+    animation: goout 1s ease-out forwards;
+}
+
+@keyframes goin {
+    from{
+        opacity:0;
+        transform: translateY(-15px);
+    }
+    to{
+        opacity:1;
+        transform: translateY(0px);
+    }
+}
+@keyframes goout {
+    from{
+        opacity:1;
+        transform: translateY(0px);
+    }
+    to{
+        opacity:0;
+        transform: translateY(-15px);
+    }
 }
 </style>
